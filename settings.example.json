@@ -1,0 +1,8 @@
+{
+  "dbfile": "test_datas/main.db",
+  "goo_api_key": "xxx",
+  "goo_customsearch_key": "mmm",
+  "clarifai_public": "ppp",
+  "clarifai_secret": "vvv",
+  "clarifai_token": "qqq"
+}
