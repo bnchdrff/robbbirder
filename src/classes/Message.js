@@ -23,7 +23,7 @@ export default class Message {
       return false;
     }
 
-    return this.getBirdName(this._message);;
+    return this.getBirdName(this._message);
   }
 
   hasMorningBird() {

@@ -1,6 +1,6 @@
 import assert from 'assert';
 
-import Message from '../src/classes/Message';
+import Message from '../../src/classes/Message';
 
 describe('Message', () => {
   describe('#construct', () => {

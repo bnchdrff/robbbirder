@@ -1,24 +1,50 @@
+import _ from 'lodash';
+
 import Clarifai from '../vendor/clarifai';
 
 export default class Classifier {
 
-  constructor(clarifai_public, clarifai_secret) {
-    this._public = clarifai_public;
-    this._secret = clarifai_secret;
+  constructor(clarifaiPublic, clarifaiSecret) {
+    this._public = clarifaiPublic;
+    this._secret = clarifaiSecret;
 
     Clarifai.initAPI(this._public, this._secret);
   }
 
   /**
-   * Tag an image
-   *
-   * @param {string} url
-   * @param {string} name
-   * @param {fn} callback, called with args err,res
+   * @callback tagResults
+   * @param {string} err - error message
+   * @param {string[]} res - matchedImages
    */
-  tagImage(url, name, callback) {
-    Clarifai.tagURL(url , name, callback);
+
+  /**
+   * Tag image(s)
+   *
+   * @param {(string|string[])} urls - image url(s)
+   * @param {(string|string[])} tags - only return images that have these tags
+   * @param {tagResults} cb, called with array of qualifying images
+   */
+  imagesWithTags(urls, tags, cb) {
+    Clarifai.tagURL(urls, 'whatever', (err, res) => {
+
+      if (!res.status_code || res.status_code !== 'OK') {
+        cb('clarifai error: ' + res.status_msg);
+      }
+
+      cb(
+        null,
+        this.findImagesWithTags(res.results, tags)
+      );
+    });
+  }
+
+  findImagesWithTags(results, tags) {
+    return _(results)
+      .filter((res) => {
+        return (_.difference(tags, res.result.tag.classes).length === 0);
+      })
+      .map('url')
+      .value();
   }
 
 }
-

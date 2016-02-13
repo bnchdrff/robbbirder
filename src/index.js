@@ -10,8 +10,19 @@ const goo = new GooAsker(goo_api_key, goo_customsearch_key);
 
 const cla = new Classifier(clarifai_public, clarifai_secret);
 
-goo.getBirdPhoto('canada goose', (url) => {
-  cla.tagImage(url, 'canada goose', (err, res) => {
+let bird = "Kirtland's Warbler";
+let tags = ['no person', 'bird'];
+
+goo.getBirdPhotos(bird, (err, urls) => {
+  if (err) {
+    throw new Error(err);
+  }
+
+  cla.imagesWithTags(urls, tags, (err, res) => {
+    if (err) {
+      throw new Error(err);
+    }
+
     console.log(res);
   });
 });
