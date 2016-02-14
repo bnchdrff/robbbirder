@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Robb Report Birder Bot",
   "main": "index.js",
+  "engines": { "npm": ">=2.14.12" },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register test/**/*.js",
     "pretest": "./node_modules/babel-cli/bin/babel.js src -d dist",
